@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-MZ" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicação Moçambique - Conectando a Nação</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mozGreen: '#007A3D',
+                        mozYellow: '#FCD116',
+                        mozRed: '#CE1126',
+                        mozBlack: '#121212',
+                        mozBlue: '#0055A5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        .moz-gradient {
+            background: linear-gradient(135deg, #007A3D 0%, #0055A5 100%);
+        }
+        .moz-flag-border {
+            border-left: 6px solid #007A3D;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Ribbon National Colors -->
+    <div class="h-2 w-full flex">
+        <div class="h-full bg-mozGreen w-1/3"></div>
+        <div class="h-full bg-mozYellow w-1/3"></div>
+        <div class="h-full bg-mozRed w-1/3"></div>
+    </div>
+
+    <!-- Navegação -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('feed')">
+                    <div class="w-12 h-12 rounded-xl moz-gradient flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-green-900/20">
+                        CM
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-gray-900 block leading-tight">
+                            Comunicação <span class="text-mozGreen">Moçambique</span>
+                        </span>
+                        <span class="text-xs text-gray-500 font-medium tracking-wider uppercase">Portal de Conexão Nacional</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('feed')" id="nav-feed" class="tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-mozGreen bg-green-50">
+                        <i class="fa-solid font-normal fa-newspaper mr-2"></i>Mural & Feed
+                    </button>
+                    <button onclick="switchTab('directory')" id="nav-directory" class="tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-600 hover:bg-gray-100">
+                        <i class="fa-solid fa-map-location-dot mr-2"></i>Endereços & Contactos
+                    </button>
+                    <button onclick="switchTab('radio')" id="nav-radio" class="tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-600 hover:bg-gray-100">
+                        <i class="fa-solid fa-radio mr-2"></i>Rádio ao Vivo
+                    </button>
+                    <button onclick="switchTab('hosting')" id="nav-hosting" class="tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200">
+                        <i class="fa-solid fa-cloud-arrow-up mr-2 text-amber-600"></i>Hospedar Grátis
+                    </button>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <button onclick="openModal('postModal')" class="bg-mozGreen hover:bg-emerald-800 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md transition-all duration-200 flex items-center">
+                        <i class="fa-solid fa-plus mr-2"></i> Publicar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Bar -->
+        <div class="md:hidden flex justify-around border-t border-gray-200 bg-white py-2 px-1 text-xs">
+            <button onclick="switchTab('feed')" id="mob-nav-feed" class="flex flex-col items-center p-2 text-mozGreen font-bold">
+                <i class="fa-solid fa-newspaper text-lg mb-0.5"></i> Feed
+            </button>
+            <button onclick="switchTab('directory')" id="mob-nav-directory" class="flex flex-col items-center p-2 text-gray-600">
+                <i class="fa-solid fa-map-location-dot text-lg mb-0.5"></i> Endereços
+            </button>
+            <button onclick="switchTab('radio')" id="mob-nav-radio" class="flex flex-col items-center p-2 text-gray-600">
+                <i class="fa-solid fa-radio text-lg mb-0.5"></i> Rádio
+            </button>
+            <button onclick="switchTab('hosting')" id="mob-nav-hosting" class="flex flex-col items-center p-2 text-amber-700">
+                <i class="fa-solid fa-cloud-arrow-up text-lg mb-0.5"></i> Hospedar
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- Banner de Boas-Vindas -->
+        <section class="relative rounded-3xl overflow-hidden moz-gradient text-white p-6 sm:p-10 mb-8 shadow-xl">
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold tracking-wide uppercase mb-3">
+                    🇲🇿 Plataforma Comunitária e Informativa
+                </span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                    Conectando Vozes e Endereços em Moçambique
+                </h1>
+                <p class="mt-3 text-white/90 text-sm sm:text-base leading-relaxed">
+                    Aceda a contactos úteis das províncias, participe no mural de comunicação em tempo real e acompanhe as novidades e emissões de rádio locais.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button onclick="switchTab('directory')" class="bg-mozYellow hover:bg-yellow-400 text-mozBlack font-bold text-sm px-5 py-2.5 rounded-xl shadow transition">
+                        Explorar Endereços de Moçambique
+                    </button>
+                    <button onclick="openModal('postModal')" class="bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition border border-white/30">
+                        Novo Comunicado
+                    </button>
+                </div>
+            </div>
+            <!-- Elemento decorativo gráfico -->
+            <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:block opacity-20 text-9xl font-black">
+                🇲🇿
+            </div>
+        </section>
+
+        <!-- SEÇÃO 1: MURAL & FEED INTERATIVO -->
+        <section id="sec-feed" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900">Mural de Comunicação</h2>
+                    <p class="text-xs text-gray-500">Publicações e avisos comunitários atualizados pelos cidadãos.</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-gray-500">Filtrar Categoria:</span>
+                    <select id="feedCategoryFilter" onchange="filterFeed()" class="bg-gray-50 border border-gray-200 text-gray-700 text-xs rounded-lg px-3 py-2 font-medium focus:ring-mozGreen focus:border-mozGreen">
+                        <option value="todos">Todas as Categoria</option>
+                        <option value="Notícias">Notícias</option>
+                        <option value="Avisos">Avisos Comunitários</option>
+                        <option value="Cultura">Cultura e Eventos</option>
+                        <option value="Serviços">Serviços</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Coluna Principal do Feed -->
+                <div class="lg:col-span-2 space-y-4" id="feedContainer">
+                    <!-- Posts serão renderizados via JS -->
+                </div>
+
+                <!-- Barra Lateral Informativa -->
+                <div class="space-y-6">
+                    <!-- Painel Estatísticas -->
+                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center">
+                            <i class="fa-solid fa-chart-line text-mozGreen mr-2"></i> Dinâmica da Plataforma
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="p-3 bg-green-50 rounded-xl">
+                                <span class="block text-2xl font-black text-mozGreen" id="totalPostsCount">0</span>
+                                <span class="text-xs font-medium text-gray-600">Publicações</span>
+                            </div>
+                            <div class="p-3 bg-blue-50 rounded-xl">
+                                <span class="block text-2xl font-black text-mozBlue" id="totalLikesCount">0</span>
+                                <span class="text-xs font-medium text-gray-600">Curtidas Totais</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anúncio Comunitário / Destaque -->
+                    <div class="bg-gradient-to-br from-amber-500 to-red-600 text-white p-5 rounded-2xl shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-widest bg-black/20 px-2 py-0.5 rounded">Destaque do Dia</span>
+                        <h4 class="font-bold text-lg mt-2">Linha Aberta de Emergência</h4>
+                        <p class="text-xs text-white/90 mt-1">Consulte números diretos de bombeiros, polícia e centros de saúde de todas as províncias moçambicanas no directório.</p>
+                        <button onclick="switchTab('directory')" class="mt-3 w-full bg-white text-gray-900 text-xs font-bold py-2 rounded-lg hover:bg-gray-100 transition">
+                            Aceder Directório
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: DIRECTÓRIO & ENDEREÇOS DE MOÇAMBIQUE -->
+        <section id="sec-directory" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Directório de Endereços em Moçambique</h2>
+                        <p class="text-sm text-gray-500">Localize rádios, jornais, serviços públicos e centros comunitários pelas províncias.</p>
+                    </div>
+                    <button onclick="openModal('addAddressModal')" class="bg-mozBlue hover:bg-blue-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center self-start md:self-auto">
+                        <i class="fa-solid fa-plus-circle mr-2"></i> Adicionar Novo Endereço
+                    </button>
+                </div>
+
+                <!-- Filtros e Pesquisa -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-sm"></i>
+                        <input type="text" id="searchAddress" onkeyup="filterDirectory()" placeholder="Pesquisar por nome ou serviço..." class="w-full pl-9 pr-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-mozGreen focus:border-mozGreen">
+                    </div>
+                    <div>
+                        <select id="provinceFilter" onchange="filterDirectory()" class="w-full py-2 px-3 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:ring-mozGreen focus:border-mozGreen">
+                            <option value="todas">Todas as Províncias</option>
+                            <option value="Maputo Cidade">Maputo Cidade</option>
+                            <option value="Maputo Província">Maputo Província</option>
+                            <option value="Gaza">Gaza</option>
+                            <option value="Inhambane">Inhambane</option>
+                            <option value="Sofala">Sofala (Beira)</option>
+                            <option value="Manica">Manica</option>
+                            <option value="Tete">Tete</option>
+                            <option value="Zambézia">Zambézia</option>
+                            <option value="Nampula">Nampula</option>
+                            <option value="Cabo Delgado">Cabo Delgado</option>
+                            <option value="Niassa">Niassa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="typeFilter" onchange="filterDirectory()" class="w-full py-2 px-3 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:ring-mozGreen focus:border-mozGreen">
+                            <option value="todos">Todos os Tipos</option>
+                            <option value="Comunicação / Mídia">Comunicação / Mídia</option>
+                            <option value="Serviço Público">Serviço Público</option>
+                            <option value="Centro Comunitário">Centro Comunitário</option>
+                            <option value="Emergência">Emergência</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Endereços -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="directoryList">
+                <!-- Renderizado via Javascript -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: CANAIS DE RÁDIO E NOTÍCIAS AO VIVO -->
+        <section id="sec-radio" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-900">Emissoras & Rádios de Moçambique</h2>
+                <p class="text-sm text-gray-500">Ouça emissões locais e comunicados de rádio simulados de todo o país.</p>
+
+                <!-- Player Principal em Destaque -->
+                <div class="mt-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-mozGreen flex items-center justify-center text-2xl shadow-lg animate-pulse">
+                            <i class="fa-solid fa-broadcast-tower"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs uppercase font-bold tracking-widest text-mozYellow" id="radioStatus">Em Direto</span>
+                            <h3 class="text-xl font-bold" id="currentStationTitle">Rádio Moçambique - Antena Nacional</h3>
+                            <p class="text-xs text-gray-300" id="currentStationDesc">Maputo, FM 97.9 MHz - Notícias das 12h e Informação Nacional</p>
+                        </div>
+                    </div>
+                    <!-- Controlo de Áudio Simulado -->
+                    <div class="flex items-center space-x-4 w-full md:w-auto justify-center">
+                        <button onclick="toggleAudio()" id="playBtn" class="w-14 h-14 bg-mozYellow text-mozBlack rounded-full flex items-center justify-center text-xl shadow-lg hover:scale-105 transition">
+                            <i class="fa-solid fa-play ml-1" id="playIcon"></i>
+                        </button>
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400">Volume</span>
+                            <input type="range" min="0" max="100" value="80" class="w-24 accent-mozYellow cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Estações -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="radioList">
+                <!-- Estações serão inseridas via JS -->
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: GUIA DE HOSPEDAGEM GRATUITA -->
+        <section id="sec-hosting" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl border border-amber-200 shadow-sm">
+                <div class="max-w-3xl">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Passo a Passo Simplificado
+                    </span>
+                    <h2 class="text-3xl font-extrabold text-gray-900 mt-3">Como Hospedar este Site Grátis e Partilhar o Link</h2>
+                    <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                        Siga este guia simples para colocar o seu site <strong>Comunicação Moçambique</strong> online gratuitamente na internet utilizando serviços como GitHub Pages, Netlify ou Vercel.
+                    </p>
+                </div>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Opção 1: Netlify Drop (Mais Fácil) -->
+                    <div class="border border-gray-200 rounded-2xl p-5 hover:border-mozGreen transition bg-gray-50/50">
+                        <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-lg mb-4">
+                            1
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-base">Netlify Drop (Sem Código)</h3>
+                        <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                            A forma mais rápida sem precisar de instalar nada.
+                        </p>
+                        <ol class="text-xs text-gray-700 mt-3 space-y-2 list-decimal pl-4">
+                            <li>Guarde este código num ficheiro com o nome <code class="bg-gray-200 px-1 py-0.5 rounded">index.html</code> no seu computador.</li>
+                            <li>Aceda ao site <a href="https://app.netlify.com/drop" target="_blank" class="text-mozBlue underline font-semibold">app.netlify.com/drop</a>.</li>
+                            <li>Arraste a pasta que contém o ficheiro <code class="bg-gray-200 px-1 py-0.5 rounded">index.html</code> para a página.</li>
+                            <li>Em menos de 1 minuto o Netlify gera um <strong>link público grátis</strong> para partilhar!</li>
+                        </ol>
+                    </div>
+
+                    <!-- Opção 2: GitHub Pages -->
+                    <div class="border border-gray-200 rounded-2xl p-5 hover:border-mozGreen transition bg-gray-50/50">
+                        <div class="w-10 h-10 rounded-xl bg-gray-200 text-gray-800 flex items-center justify-center font-bold text-lg mb-4">
+                            2
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-base">GitHub Pages</h3>
+                        <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                            Ideal para manter o projeto guardado e atualizado.
+                        </p>
+                        <ol class="text-xs text-gray-700 mt-3 space-y-2 list-decimal pl-4">
+                            <li>Crie uma conta gratuita em <a href="https://github.com" target="_blank" class="text-mozBlue underline font-semibold">github.com</a>.</li>
+                            <li>Crie um novo Repositório público (ex: <code class="bg-gray-200 px-1 py-0.5 rounded">comunicacao-mozambique</code>).</li>
+                            <li>Carregue o ficheiro <code class="bg-gray-200 px-1 py-0.5 rounded">index.html</code>.</li>
+                            <li>Vá às <strong>Settings &gt; Pages</strong> e ative o branch <code class="bg-gray-200 px-1 py-0.5 rounded">main</code>. O seu link será gerado automaticamente.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Opção 3: Vercel -->
+                    <div class="border border-gray-200 rounded-2xl p-5 hover:border-mozGreen transition bg-gray-50/50">
+                        <div class="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center font-bold text-lg mb-4">
+                            3
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-base">Vercel</h3>
+                        <p class="text-xs text-gray-600 mt-2 leading-relaxed">
+                            Excelente velocidade e domínio gratuito personalizado.
+                        </p>
+                        <ol class="text-xs text-gray-700 mt-3 space-y-2 list-decimal pl-4">
+                            <li>Aceda a <a href="https://vercel.com" target="_blank" class="text-mozBlue underline font-semibold">vercel.com</a> e crie conta.</li>
+                            <li>Importe o seu repositório do GitHub ou utilize a ferramenta de upload direto.</li>
+                            <li>Clique em <strong>Deploy</strong>. O site ficará no ar com certificado SSL (HTTPS) gratuito.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Dica de Compartilhamento -->
+                <div class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200 flex items-start space-x-3">
+                    <i class="fa-solid fa-share-nodes text-amber-600 text-xl mt-0.5"></i>
+                    <div>
+                        <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wide">Como Partilhar o Seu Link em Moçambique</h4>
+                        <p class="text-xs text-amber-800 mt-0.5">
+                            Assim que tiver o seu link (ex: <em>https://comunicacao-mozambique.netlify.app</em>), pode partilhá-lo via WhatsApp, redes sociais, SMS ou adicionar aos grupos comunitários para dar acesso instantâneo aos contactos e publicações locais.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                <div>
+                    <h3 class="text-white font-bold text-base">Comunicação Moçambique</h3>
+                    <p class="text-xs text-gray-400 mt-1">Unindo as províncias através da informação e participação comunitária.</p>
+                </div>
+                <div class="text-xs text-gray-500">
+                    &copy; <span id="year"></span> Comunicação Moçambique. Desenvolvido para acesso livre e aberto.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: NOVO COMUNICADO / POST -->
+    <div id="postModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative">
+            <button onclick="closeModal('postModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-gray-900 mb-1">Nova Publicação no Mural</h3>
+            <p class="text-xs text-gray-500 mb-4">Partilhe notícias ou comunicados com a comunidade moçambicana.</p>
+
+            <form onsubmit="submitPost(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Seu Nome / Organização</label>
+                    <input type="text" id="postAuthor" required placeholder="Ex: Maria Mabote / Associação Cultural" class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen focus:border-mozGreen">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Província</label>
+                        <select id="postProvince" required class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen focus:border-mozGreen">
+                            <option value="Maputo Cidade">Maputo Cidade</option>
+                            <option value="Maputo Província">Maputo Província</option>
+                            <option value="Gaza">Gaza</option>
+                            <option value="Inhambane">Inhambane</option>
+                            <option value="Sofala">Sofala</option>
+                            <option value="Manica">Manica</option>
+                            <option value="Tete">Tete</option>
+                            <option value="Zambézia">Zambézia</option>
+                            <option value="Nampula">Nampula</option>
+                            <option value="Cabo Delgado">Cabo Delgado</option>
+                            <option value="Niassa">Niassa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Categoria</label>
+                        <select id="postCategory" required class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen focus:border-mozGreen">
+                            <option value="Notícias">Notícias</option>
+                            <option value="Avisos">Avisos</option>
+                            <option value="Cultura">Cultura</option>
+                            <option value="Serviços">Serviços</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Mensagem / Conteúdo do Comunicado</label>
+                    <textarea id="postContent" rows="4" required placeholder="Escreva aqui as informações do seu comunicado..." class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen focus:border-mozGreen"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('postModal')" class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold bg-mozGreen hover:bg-emerald-800 text-white rounded-xl shadow">Publicar Comunicado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADICIONAR NOVO ENDEREÇO -->
+    <div id="addAddressModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl p-6 shadow-2xl relative">
+            <button onclick="closeModal('addAddressModal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-gray-900 mb-1">Registar Novo Endereço</h3>
+            <p class="text-xs text-gray-500 mb-4">Adicione serviços públicos, rádios ou centros de interesse em Moçambique.</p>
+
+            <form onsubmit="submitAddress(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Nome da Entidade / Local</label>
+                    <input type="text" id="addrName" required placeholder="Ex: Rádio Comunitária de Xai-Xai" class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Província / Cidade</label>
+                        <select id="addrProvince" required class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen">
+                            <option value="Maputo Cidade">Maputo Cidade</option>
+                            <option value="Maputo Província">Maputo Província</option>
+                            <option value="Gaza">Gaza</option>
+                            <option value="Inhambane">Inhambane</option>
+                            <option value="Sofala">Sofala</option>
+                            <option value="Manica">Manica</option>
+                            <option value="Tete">Tete</option>
+                            <option value="Zambézia">Zambézia</option>
+                            <option value="Nampula">Nampula</option>
+                            <option value="Cabo Delgado">Cabo Delgado</option>
+                            <option value="Niassa">Niassa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Tipo de Serviço</label>
+                        <select id="addrType" required class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen">
+                            <option value="Comunicação / Mídia">Comunicação / Mídia</option>
+                            <option value="Serviço Público">Serviço Público</option>
+                            <option value="Centro Comunitário">Centro Comunitário</option>
+                            <option value="Emergência">Emergência</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Endereço Físico / Localização</label>
+                    <input type="text" id="addrLocation" required placeholder="Ex: Av. Eduardo Mondlane, n.º 1200" class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Contacto Telefónico / Email</label>
+                    <input type="text" id="addrPhone" placeholder="Ex: +258 84 000 0000" class="w-full text-sm p-2.5 border border-gray-300 rounded-xl focus:ring-mozGreen">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('addAddressModal')" class="px-4 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold bg-mozBlue hover:bg-blue-800 text-white rounded-xl shadow">Salvar Endereço</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICAÇÃO TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-3 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center space-x-3 z-50">
+        <i class="fa-solid fa-circle-check text-mozYellow"></i>
+        <span id="toastMsg" class="text-xs font-medium">Ação concluída com sucesso!</span>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        // Dados Iniciais (Mock Data para Moçambique)
+        let posts = [
+            {
+                id: 1,
+                author: "Jornal de Notícias Moz",
+                province: "Maputo Cidade",
+                category: "Notícias",
+                content: "Feira de Inovação e Tecnologias de Comunicação arranca esta semana na Cidade de Maputo reunindo jovens criadores de todo o país.",
+                date: "Hoje às 10:30",
+                likes: 24,
+                comments: ["Excelente iniciativa!", "Onde será o local exato?"]
+            },
+            {
+                id: 2,
+                author: "Rádio Comunitária da Beira",
+                province: "Sofala",
+                category: "Avisos",
+                content: "Comunicado: Trabalhos de manutenção no sistema de abastecimento elétrico no bairro Chaimite programados para o próximo sábado.",
+                date: "Ontem às 16:15",
+                likes: 12,
+                comments: ["Obrigado pelo aviso."]
+            },
+            {
+                id: 3,
+                author: "Associação Cultural de Nampula",
+                province: "Nampula",
+                category: "Cultura",
+                content: "Festival de Dança e Música Tradicional Makhuwa no Centro Cultural de Nampula. Entrada livre para todos os cidadãos.",
+                date: "25 de Outubro",
+                likes: 45,
+                comments: []
+            }
+        ];
+
+        let directory = [
+            {
+                id: 1,
+                name: "Rádio Moçambique - Emissora Nacional",
+                province: "Maputo Cidade",
+                type: "Comunicação / Mídia",
+                location: "Av. do Trabalho, Maputo",
+                phone: "+258 21 420 811"
+            },
+            {
+                id: 2,
+                name: "Hospital Central da Beira",
+                province: "Sofala",
+                type: "Emergência",
+                location: "Av. Correia de Brito, Beira",
+                phone: "+258 23 312 081"
+            },
+            {
+                id: 3,
+                name: "Jornal Diário de Moçambique",
+                province: "Sofala",
+                type: "Comunicação / Mídia",
+                location: "Rua Correia de Brito, Beira",
+                phone: "+258 23 323 051"
+            },
+            {
+                id: 4,
+                name: "Gabinete de Informação (GABINFO)",
+                province: "Maputo Cidade",
+                type: "Serviço Público",
+                location: "Av. Francisco Orlando Magumbwe, Maputo",
+                phone: "+258 21 490 340"
+            },
+            {
+                id: 5,
+                name: "Centro Comunitário de Nampula",
+                province: "Nampula",
+                type: "Centro Comunitário",
+                location: "Av. 25 de Setembro, Nampula",
+                phone: "+258 26 212 500"
+            }
+        ];
+
+        let radioStations = [
+            {
+                id: 1,
+                name: "Rádio Moçambique - Antena Nacional",
+                city: "Maputo",
+                freq: "97.9 FM",
+                desc: "Emissão de notícias nacionais, cultura e desporto."
+            },
+            {
+                id: 2,
+                name: "Rádio Cidade Maputo",
+                city: "Maputo",
+                freq: "92.7 FM",
+                desc: "Música, entretenimento e informação para os jovens."
+            },
+            {
+                id: 3,
+                name: "Emissora Provincial de Sofala",
+                city: "Beira",
+                freq: "101.2 FM",
+                desc: "Notícias regionais da Beira e província de Sofala."
+            },
+            {
+                id: 4,
+                name: "Rádio Comunitária de Nampula",
+                city: "Nampula",
+                freq: "89.5 FM",
+                desc: "Voz comunitária das localidades do norte."
+            }
+        ];
+
+        let isPlaying = false;
+
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("year").innerText = new Date().getFullYear();
+            renderFeed();
+            renderDirectory();
+            renderRadio();
+            updateStats();
+        });
+
+        // Alternador de Abas
+        function switchTab(tab) {
+            const sections = ['feed', 'directory', 'radio', 'hosting'];
+            sections.forEach(s => {
+                document.getElementById(`sec-${s}`).classList.add('hidden');
+
+                // Estilo desktop
+                const navBtn = document.getElementById(`nav-${s}`);
+                if (navBtn) {
+                    navBtn.className = "tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-gray-600 hover:bg-gray-100";
+                }
+            });
+
+            document.getElementById(`sec-${tab}`).classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`nav-${tab}`);
+            if (activeBtn) {
+                if(tab === 'hosting') {
+                    activeBtn.className = "tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-amber-800 bg-amber-100 border border-amber-300";
+                } else {
+                    activeBtn.className = "tab-btn px-4 py-2.5 rounded-lg font-semibold text-sm transition-all text-mozGreen bg-green-50 font-bold";
+                }
+            }
+        }
+
+        // Renderizar Feed
+        function renderFeed(filterCat = 'todos') {
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = '';
+
+            const filtered = filterCat === 'todos' ? posts : posts.filter(p => p.category === filterCat);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-500 text-sm">Nenhuma publicação encontrada para esta categoria.</div>`;
+                return;
+            }
+
+            filtered.forEach(post => {
+                const card = document.createElement('article');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-100 shadow-sm moz-flag-border hover:shadow-md transition";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-mozGreen/10 text-mozGreen flex items-center justify-center font-bold text-sm">
+                                ${post.author.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">${post.author}</h4>
+                                <div class="flex items-center space-x-2 text-xs text-gray-500">
+                                    <span><i class="fa-solid fa-location-dot text-mozRed"></i> ${post.province}</span>
+                                    <span>•</span>
+                                    <span>${post.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">
+                            ${post.category}
+                        </span>
+                    </div>
+
+                    <p class="mt-3 text-sm text-gray-700 leading-relaxed">${post.content}</p>
+
+                    <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                        <button onclick="likePost(${post.id})" class="flex items-center space-x-1.5 hover:text-mozRed font-semibold transition">
+                            <i class="fa-solid fa-heart ${post.likes > 0 ? 'text-mozRed' : ''}"></i>
+                            <span>${post.likes} Gostei</span>
+                        </button>
+                        <span class="font-medium"><i class="fa-solid fa-comment text-gray-400 mr-1"></i> ${post.comments.length} Comentários</span>
+                    </div>
+
+                    <!-- Lista de Comentários Simulados -->
+                    ${post.comments.length > 0 ? `
+                        <div class="mt-3 pt-2 bg-gray-50 p-3 rounded-xl space-y-1 text-xs">
+                            ${post.comments.map(c => `<div class="text-gray-600"><span class="font-semibold text-gray-800">Cidadão:</span> ${c}</div>`).join('')}
+                        </div>
+                    ` : ''}
+
+                    <!-- Input de Comentário -->
+                    <div class="mt-3 flex gap-2">
+                        <input type="text" id="comment-input-${post.id}" placeholder="Escrever um comentário..." class="flex-grow text-xs bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-mozGreen">
+                        <button onclick="addComment(${post.id})" class="bg-gray-800 hover:bg-black text-white text-xs px-3 py-1.5 rounded-lg font-semibold transition">Comentar</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Curtir Post
+        function likePost(id) {
+            const post = posts.find(p => p.id === id);
+            if (post) {
+                post.likes++;
+                renderFeed(document.getElementById('feedCategoryFilter').value);
+                updateStats();
+                showToast("Gostei adicionado!");
+            }
+        }
+
+        // Adicionar Comentário
+        function addComment(id) {
+            const input = document.getElementById(`comment-input-${id}`);
+            if (input && input.value.trim() !== '') {
+                const post = posts.find(p => p.id === id);
+                if (post) {
+                    post.comments.push(input.value.trim());
+                    renderFeed(document.getElementById('feedCategoryFilter').value);
+                    showToast("Comentário publicado!");
+                }
+            }
+        }
+
+        // Filtrar Feed
+        function filterFeed() {
+            const cat = document.getElementById('feedCategoryFilter').value;
+            renderFeed(cat);
+        }
+
+        // Renderizar Directório
+        function renderDirectory(data = directory) {
+            const list = document.getElementById('directoryList');
+            list.innerHTML = '';
+
+            if (data.length === 0) {
+                list.innerHTML = `<div class="col-span-full bg-white p-8 rounded-2xl text-center text-gray-500 text-sm">Nenhum endereço encontrado para os filtros selecionados.</div>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-blue-50 text-mozBlue">${item.type}</span>
+                            <span class="text-xs text-gray-500 font-semibold"><i class="fa-solid fa-map-pin text-mozRed mr-1"></i>${item.province}</span>
+                        </div>
+                        <h4 class="font-bold text-base text-gray-900">${item.name}</h4>
+                        <p class="text-xs text-gray-600 mt-2"><i class="fa-solid fa-location-dot mr-1 text-gray-400"></i>${item.location}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-800"><i class="fa-solid fa-phone text-mozGreen mr-1"></i>${item.phone}</span>
+                        <button onclick="copyContact('${item.phone}')" class="text-xs text-mozGreen hover:underline font-semibold">Copiar Contacto</button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // Filtrar Directório
+        function filterDirectory() {
+            const query = document.getElementById('searchAddress').value.toLowerCase();
+            const province = document.getElementById('provinceFilter').value;
+            const type = document.getElementById('typeFilter').value;
+
+            const filtered = directory.filter(item => {
+                const matchQuery = item.name.toLowerCase().includes(query) || item.location.toLowerCase().includes(query);
+                const matchProvince = province === 'todas' || item.province === province;
+                const matchType = type === 'todos' || item.type === type;
+                return matchQuery && matchProvince && matchType;
+            });
+
+            renderDirectory(filtered);
+        }
+
+        // Renderizar Rádios
+        function renderRadio() {
+            const container = document.getElementById('radioList');
+            container.innerHTML = '';
+
+            radioStations.forEach(st => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between hover:border-mozGreen transition cursor-pointer";
+                card.onclick = () => selectStation(st);
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-mozGreen bg-green-50 px-2 py-0.5 rounded">${st.freq}</span>
+                            <span class="text-xs text-gray-400">${st.city}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-900">${st.name}</h4>
+                        <p class="text-xs text-gray-500 mt-1">${st.desc}</p>
+                    </div>
+                    <div class="mt-4 flex items-center text-xs font-bold text-mozGreen">
+                        <i class="fa-solid fa-play-circle text-base mr-1.5"></i> Ouvir Emissão
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectStation(st) {
+            document.getElementById('currentStationTitle').innerText = st.name;
+            document.getElementById('currentStationDesc').innerText = `${st.city}, ${st.freq} - Sintonizado`;
+            isPlaying = true;
+            updatePlayButton();
+            showToast(`Sintonizado em: ${st.name}`);
+        }
+
+        function toggleAudio() {
+            isPlaying = !isPlaying;
+            updatePlayButton();
+        }
+
+        function updatePlayButton() {
+            const icon = document.getElementById('playIcon');
+            const status = document.getElementById('radioStatus');
+            if (isPlaying) {
+                icon.className = "fa-solid fa-pause";
+                status.innerText = "A Emitir Ao Vivo";
+                status.className = "text-xs uppercase font-bold tracking-widest text-mozYellow animate-pulse";
+            } else {
+                icon.className = "fa-solid fa-play ml-1";
+                status.innerText = "Em Pausa";
+                status.className = "text-xs uppercase font-bold tracking-widest text-gray-400";
+            }
+        }
+
+        // Atualizar Estatísticas
+        function updateStats() {
+            document.getElementById('totalPostsCount').innerText = posts.length;
+            const totalLikes = posts.reduce((acc, p) => acc + p.likes, 0);
+            document.getElementById('totalLikesCount').innerText = totalLikes;
+        }
+
+        // Modais
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // Submeter Novo Post
+        function submitPost(e) {
+            e.preventDefault();
+            const author = document.getElementById('postAuthor').value;
+            const province = document.getElementById('postProvince').value;
+            const category = document.getElementById('postCategory').value;
+            const content = document.getElementById('postContent').value;
+
+            const newPost = {
+                id: Date.now(),
+                author,
+                province,
+                category,
+                content,
+                date: "Agora mesmo",
+                likes: 0,
+                comments: []
+            };
+
+            posts.unshift(newPost);
+            renderFeed();
+            updateStats();
+            closeModal('postModal');
+            e.target.reset();
+            showToast("Comunicado publicado com sucesso!");
+        }
+
+        // Submeter Novo Endereço
+        function submitAddress(e) {
+            e.preventDefault();
+            const name = document.getElementById('addrName').value;
+            const province = document.getElementById('addrProvince').value;
+            const type = document.getElementById('addrType').value;
+            const location = document.getElementById('addrLocation').value;
+            const phone = document.getElementById('addrPhone').value || "Não informado";
+
+            const newAddr = {
+                id: Date.now(),
+                name,
+                province,
+                type,
+                location,
+                phone
+            };
+
+            directory.unshift(newAddr);
+            renderDirectory();
+            closeModal('addAddressModal');
+            e.target.reset();
+            showToast("Endereço adicionado ao directório!");
+        }
+
+        // Copiar Contacto
+        function copyContact(text) {
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            showToast("Contacto copiado: " + text);
+        }
+
+        // Utilitário de Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
